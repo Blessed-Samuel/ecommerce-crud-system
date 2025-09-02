@@ -248,7 +248,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have any questions or issues, please:
 1. Check the [API documentation](docs/api-endpoints.md)
 2. Open an issue on GitHub
-3. Contact: [samuelalisigwe22@gmail.com]
+3. Contact: samuelalisigwe22@gmail.com
 
 ## 🙏 Acknowledgments
 
