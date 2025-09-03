@@ -42,6 +42,7 @@ mysql -u root -p
 
 -- Create database
 CREATE DATABASE ecommerce_db;
+USE ecommerce_db;
 exit
 ```
 
