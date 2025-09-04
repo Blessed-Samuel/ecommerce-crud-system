@@ -46,6 +46,11 @@ USE ecommerce_db;
 exit
 ```
 
+#### Locate the Database Schema:
+```
+Visit the folder: /src/database/schema.sql
+```
+
 #### Import Database Schema:
 ```bash
 # Import the complete schema with sample data

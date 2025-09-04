@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -49,14 +49,14 @@ app.get("/api/v1", (req, res) => {
 // Health check endpoint
 app.get("/api/v1/health", async (req, res) => {
     try {
-        const conn = await pool.getConnection();
-        conn.release();
+        const connection = await pool.getConnection();
+        connection.release();
 
         res.json({
             status: "healthy",
             timestamp: new Date().toISOString(),
             uptime: process.uptime(),
-            database: "connected",
+            database: "Database Connection Successful",
             version: "1.0.0"
         });
     } catch (error) {
@@ -64,7 +64,7 @@ app.get("/api/v1/health", async (req, res) => {
             status: "unhealthy",
             timestamp: new Date().toISOString(),
             database: "disconnected",
-            error: "Database connection failed"
+            error: "Database Connection failed"
         });
     }
 });
@@ -78,14 +78,14 @@ app.use("*", (req, res) => {
     });
 });
 
-// Test DB connection and start server
+// DB connection and start server
 (async () => {
     try {
-        const connectoin = await pool.getConnection();
-        console.log("✅ Database connected successfully");
-        connectoin.release();
+        const connection = await pool.getConnection();
+        console.log("Database connected successfully");
+        connection.release();
     } catch (err) {
-        console.error("❌ Database connection failed:", err);
+        console.error("Database connection failed:", err);
     }
 })();
 

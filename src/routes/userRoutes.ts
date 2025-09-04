@@ -1,19 +1,26 @@
 import { Router } from "express";
 import { UserController } from "../controllers/userController";
-import { requireAdmin, requireUser } from "../middleware/auth";
+import { authenticateToken, requireAdmin, requireUser } from "../middleware/auth";
 
 const router = Router();
 
 // Public routes
-router.post("/register", UserController.register);
-router.post("/login", UserController.login);
+router.route("/register")
+    .post(UserController.register);
 
-// Protected routes
-router.get("/profile", requireUser, UserController.getProfile);
-router.put("/profile", requireUser, UserController.updateProfile);
+router.route("/login")
+    .post(UserController.login);
 
-// Admin only
-router.get("/", requireAdmin, UserController.getAllUsers);
-router.put("/:id", requireAdmin, UserController.updateUser);
+// User profile routes (protected: authenticate → requireUser)
+router.route("/profile")
+    .get(authenticateToken, requireUser, UserController.getProfile)
+    .put(authenticateToken, requireUser, UserController.updateProfile);
+
+// Admin routes (protected: authenticate → requireAdmin)
+router.route("/")
+    .get(authenticateToken, requireAdmin, UserController.getAllUsers);
+
+router.route("/:id")
+    .put(authenticateToken, requireAdmin, UserController.updateUser);
 
 export default router;
