@@ -83,6 +83,7 @@ app.use("*", (req, res) => {
     try {
         const connection = await pool.getConnection();
         console.log("Database connected successfully");
+        console.log("Server is Online 🟢");
         connection.release();
     } catch (err) {
         console.error("Database connection failed:", err);

@@ -137,6 +137,17 @@ CREATE TABLE product_reviews (
     UNIQUE KEY unique_user_product_review (user_id, product_id)
 );
 
+-- 9. User Profiles Table (One-to-One with Users)
+CREATE TABLE user_profiles (
+    profile_id CHAR(36) PRIMARY KEY,
+    user_id CHAR(36) NOT NULL UNIQUE,
+    avatar_url VARCHAR(500),
+    bio TEXT,
+    preferences JSON,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
 -- Indexes
 CREATE INDEX idx_email ON users(email);
 CREATE INDEX idx_role ON users(role);
@@ -157,18 +168,15 @@ VALUES (
         'Electronic devices and gadgets'
     ),
     (UUID(), 'Clothing', 'Fashion and apparel'),
-    (
-        UUID(),
-        'Books',
-        'Books and educational materials'
-    ),
+    (UUID(), 'Books', 'Books and educational materials'),
     (
         UUID(),
         'Home & Garden',
         'Home improvement and gardening supplies'
     ),
     (UUID(), 'Sports', 'Sports and fitness equipment');
--- Products (using category lookup)
+
+-- Products
 INSERT INTO products (
         product_id,
         name,
@@ -187,6 +195,7 @@ SELECT UUID(),
     'IPHONE15PRO001'
 FROM categories
 WHERE name = 'Electronics';
+
 INSERT INTO products (
         product_id,
         name,
@@ -205,6 +214,7 @@ SELECT UUID(),
     'SAMSUNG4K55'
 FROM categories
 WHERE name = 'Electronics';
+
 INSERT INTO products (
         product_id,
         name,
@@ -223,6 +233,7 @@ SELECT UUID(),
     'NIKE_RUN_001'
 FROM categories
 WHERE name = 'Sports';
+
 INSERT INTO products (
         product_id,
         name,
@@ -241,6 +252,7 @@ SELECT UUID(),
     'HEADPHONE_WL001'
 FROM categories
 WHERE name = 'Electronics';
+
 INSERT INTO products (
         product_id,
         name,
@@ -259,6 +271,7 @@ SELECT UUID(),
     'BOOK_PROG_001'
 FROM categories
 WHERE name = 'Books';
+
 -- Users
 INSERT INTO users (
         user_id,
@@ -296,3 +309,136 @@ VALUES (
         '+1-555-0103',
         'user'
     );
+
+-- User Profiles
+INSERT INTO user_profiles (
+        profile_id,
+        user_id,
+        avatar_url,
+        bio,
+        preferences
+    )
+SELECT UUID(),
+    user_id,
+    'https://example.com/avatars/john.png',
+    'Tech enthusiast and gadget lover',
+    '{"theme":"dark"}'
+FROM users
+WHERE email = 'john.doe@email.com';
+
+INSERT INTO user_profiles (
+        profile_id,
+        user_id,
+        avatar_url,
+        bio,
+        preferences
+    )
+SELECT UUID(),
+    user_id,
+    'https://example.com/avatars/jane.png',
+    'Fashionista and avid reader',
+    '{"theme":"light"}'
+FROM users
+WHERE email = 'jane.smith@email.com';
+
+-- Sample Orders
+INSERT INTO orders (
+        order_id,
+        user_id,
+        total_amount,
+        payment_method,
+        payment_status,
+        order_status,
+        shipping_address_id,
+        billing_address_id
+    )
+SELECT UUID(),
+    u.user_id,
+    1129.98,
+    'credit_card',
+    'completed',
+    'processing',
+    a.address_id,
+    a.address_id
+FROM users u
+    JOIN addresses a ON u.user_id = a.user_id
+WHERE u.email = 'john.doe@email.com'
+LIMIT 1;
+
+-- Sample Order Items
+INSERT INTO order_items (
+        order_item_id,
+        order_id,
+        product_id,
+        quantity,
+        unit_price
+    )
+SELECT UUID(),
+    o.order_id,
+    p.product_id,
+    1,
+    p.price
+FROM orders o
+    JOIN products p ON p.sku = 'IPHONE15PRO001'
+LIMIT 1;
+
+INSERT INTO order_items (
+        order_item_id,
+        order_id,
+        product_id,
+        quantity,
+        unit_price
+    )
+SELECT UUID(),
+    o.order_id,
+    p.product_id,
+    1,
+    p.price
+FROM orders o
+    JOIN products p ON p.sku = 'NIKE_RUN_001'
+LIMIT 1;
+
+-- Sample Reviews
+INSERT INTO product_reviews (
+        review_id,
+        product_id,
+        user_id,
+        rating,
+        title,
+        review_text,
+        is_verified_purchase
+    )
+SELECT UUID(),
+    p.product_id,
+    u.user_id,
+    5,
+    'Amazing Phone!',
+    'The camera and performance are top-notch.',
+    TRUE
+FROM products p,
+    users u
+WHERE p.sku = 'IPHONE15PRO001'
+    AND u.email = 'john.doe@email.com'
+LIMIT 1;
+
+INSERT INTO product_reviews (
+        review_id,
+        product_id,
+        user_id,
+        rating,
+        title,
+        review_text,
+        is_verified_purchase
+    )
+SELECT UUID(),
+    p.product_id,
+    u.user_id,
+    4,
+    'Great shoes',
+    'Comfortable for daily running, but size runs small.',
+    TRUE
+FROM products p,
+    users u
+WHERE p.sku = 'NIKE_RUN_001'
+    AND u.email = 'jane.smith@email.com'
+LIMIT 1;

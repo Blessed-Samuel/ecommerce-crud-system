@@ -109,48 +109,58 @@ The system includes the following entities with proper relationships:
 - **Product Reviews**: Product rating and review system
 
 ### Entity Relationships:
+- **One-to-One**: user_profiles
 - **One-to-Many**: Users→Orders, Categories→Products, Users→Addresses
 - **Many-to-Many**: Orders↔Products (via Order Items), Users↔Products (via Cart)
 
 ## 🔌 API Endpoints
 
-### Products
-- `GET /api/products` - Get all products
-- `GET /api/products/:id` - Get product by ID
-- `POST /api/products` - Create new product
-- `PUT /api/products/:id` - Update product
-- `DELETE /api/products/:id` - Delete product
-
-### Orders
-- `GET /api/orders` - Get all orders
-- `GET /api/orders/:id` - Get order by ID
-- `GET /api/orders/user/:userId` - Get orders by user
-- `POST /api/orders` - Create new order
-- `PUT /api/orders/:id` - Update order
-- `DELETE /api/orders/:id` - Delete order
+### System
+- `GET /api/v1` → API Info (all endpoints, version, status)
+- `GET /api/v1/health` → Health check + DB connection status
 
 ### Users
-- `GET /api/users` - Get all users
-- `GET /api/users/:id` - Get user by ID
-- `POST /api/users` - Create new user
-- `PUT /api/users/:id` - Update user
-- `DELETE /api/users/:id` - Delete user
+- `POST /api/v1/users/register` → Register new user
+- `POST /api/v1/users/login` → User login
+- `GET /api/v1/users/profile` → Get user profile (requires Auth)
+
+### Products
+- `GET /api/v1/products` - Get all products
+- `GET /api/v1/products/:id` - Get product by ID
+- `POST /api/v1/products` - Create new product
+- `PUT /api/v1/products/:id` - Update product
+- `DELETE /api/v1/products/:id` - Delete product
+
+### Orders
+- `GET /api/v1/orders` - Get all orders
+- `GET /api/v1/orders/:id` - Get order by ID
+- `GET /api/v1/orders/user/:userId` - Get orders by user
+- `POST /api/v1/orders` - Create new order
+- `PUT /api/v1/orders/:id` - Update order
+- `DELETE /api/v1/orders/:id` - Delete order
+
+### Users
+- `GET /api/v1/users` - Get all users
+- `GET /api/v1/users/:id` - Get user by ID
+- `POST /api/v1/users` - Create new user
+- `PUT /api/v1/users/:id` - Update user
+- `DELETE /api/v1/users/:id` - Delete user
 
 ### Categories
-- `GET /api/categories` - Get all categories
-- `POST /api/categories` - Create new category
+- `GET /api/v1/categories` - Get all categories
+- `POST /api/v1/categories` - Create new category
 
 ### Shopping Cart
-- `GET /api/cart/:userId` - Get user's cart
-- `POST /api/cart` - Add item to cart
-- `PUT /api/cart/:cartId` - Update cart item
-- `DELETE /api/cart/:cartId` - Remove item from cart
+- `GET /api/v1/cart/:userId` - Get user's cart
+- `POST /api/v1/cart` - Add item to cart
+- `PUT /api/v1/cart/:cartId` - Update cart item
+- `DELETE /api/v1/cart/:cartId` - Remove item from cart
 
 ## 📝 API Usage Examples
 
 ### Create a Product
 ```bash
-curl -X POST http://localhost:3000/api/products \
+curl -X POST http://localhost:3000/api/v1/products \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Gaming Laptop",
@@ -164,12 +174,12 @@ curl -X POST http://localhost:3000/api/products \
 
 ### Get All Products
 ```bash
-curl http://localhost:3000/api/products
+curl http://localhost:3000/api/v1/products
 ```
 
 ### Create an Order
 ```bash
-curl -X POST http://localhost:3000/api/orders \
+curl -X POST http://localhost:3000/api/v1/orders \
   -H "Content-Type: application/json" \
   -d '{
     "user_id": 1,
