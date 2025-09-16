@@ -256,18 +256,15 @@ ecommerce-crud-system/
 5. Open a Pull Request
 
 ## 📜 License
-
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 📞 Support
-
 If you have any questions or issues, please:
-1. Check the [API documentation](docs/api-endpoints.md)
+1. Check the [API documentation](docs/API.md)
 2. Open an issue on GitHub
 3. Contact: samuelalisigwe22@gmail.com
 
 ## 🙏 Acknowledgments
-
 - Built as part of a Database Management System assignment
 - Demonstrates real-world e-commerce database design
 - Implements industry-standard REST API practices
