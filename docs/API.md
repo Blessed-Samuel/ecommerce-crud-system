@@ -8,7 +8,7 @@ Base URL: `http://localhost:3000/api/v1`
 
 ### Register a new user
 
-**Endpoint:** `POST /users/register`
+**Endpoint:** `POST /v1/users/register`
 
 **Request Body:**
 
@@ -44,7 +44,7 @@ Base URL: `http://localhost:3000/api/v1`
 
 ### User login
 
-**Endpoint:** `POST /users/login`
+**Endpoint:** `POST /v1/users/login`
 
 **Request Body:**
 
@@ -81,7 +81,7 @@ Authorization: Bearer JWT_TOKEN_HERE
 
 ### Get user profile (protected)
 
-**Endpoint:** `GET /users/profile`
+**Endpoint:** `GET /v1/users/profile`
 
 **Headers:**
 
@@ -109,7 +109,7 @@ Authorization: Bearer JWT_TOKEN_HERE
 
 ### Update user profile (protected)
 
-**Endpoint:** `PUT /users/profile`
+**Endpoint:** `PUT /v1/users/profile`
 
 **Headers:**
 
@@ -139,7 +139,7 @@ Authorization: Bearer JWT_TOKEN_HERE
 
 ### Admin: Get all users
 
-**Endpoint:** `GET /users/`
+**Endpoint:** `GET /v1/users/`
 
 **Headers:**
 
@@ -170,7 +170,7 @@ Authorization: Bearer JWT_TOKEN_HERE
 
 ### Admin: Update user role/status
 
-**Endpoint:** `PUT /users/:id`
+**Endpoint:** `PUT /v1/users/:id`
 
 **Headers:**
 
@@ -201,7 +201,7 @@ Authorization: Bearer JWT_TOKEN_HERE
 
 ### Get all products
 
-**Endpoint:** `GET /products`
+**Endpoint:** `GET /v1/products`
 
 **Response:**
 
@@ -227,7 +227,7 @@ Authorization: Bearer JWT_TOKEN_HERE
 
 ### Get product by ID
 
-**Endpoint:** `GET /products/:id`
+**Endpoint:** `GET /v1/products/:id`
 
 **Response:**
 
@@ -251,7 +251,7 @@ Authorization: Bearer JWT_TOKEN_HERE
 
 ### Create product (Admin)
 
-**Endpoint:** `POST /products`
+**Endpoint:** `POST /v1/products`
 
 **Headers:**
 
@@ -288,7 +288,7 @@ Authorization: Bearer JWT_TOKEN_HERE
 
 ### Update product (Admin)
 
-**Endpoint:** `PUT /products/:id`
+**Endpoint:** `PUT /v1/products/:id`
 
 **Headers:**
 
@@ -321,7 +321,7 @@ Authorization: Bearer JWT_TOKEN_HERE
 
 ### Delete product (Admin)
 
-**Endpoint:** `DELETE /products/:id`
+**Endpoint:** `DELETE /v1/products/:id`
 
 **Headers:**
 
@@ -341,7 +341,7 @@ Authorization: Bearer JWT_TOKEN_HERE
 
 ### Get products by category
 
-**Endpoint:** `GET /products/category/:categoryId`
+**Endpoint:** `GET /v1/products/category/:categoryId`
 
 **Response:**
 
